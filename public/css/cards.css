@@ -1,3 +1,7 @@
+body {
+    background-color: aliceblue;
+}
+
 input::placeholder {
   color: antiquewhite;
 }
