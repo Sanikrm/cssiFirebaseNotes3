@@ -20,17 +20,28 @@ const getNotes = (userId) => {
   });
 };
 const renderDataAsHtml = (data) => {
+ const arrayTitle = [];    
   let cards = ``;
   for(const noteId in data) {
     const note = data[noteId];
+    arrayTitle.push(note.title);
     // For each note create an HTML card
-    if(!note.archive) {
-        cards += createCard(note, noteId)
-    }
   };
+    arrayTitle.sort();
+
+    for (let i = 0; i< arrayTitle.length; i++) {
+        let title = arrayTitle[i];
+        for (const noteId in data) {
+            const note = data[noteId];
+            if (note.title === title) {
+                 cards += createCard(note, noteId);
+            }
+        }
+    }
   // Inject our string of HTML into our viewNotes.html page
   document.querySelector('#app').innerHTML = cards;
 };
+
 const createCard = (note, noteId) => {
    return `
      <div class="column is-one-quarter">
@@ -62,8 +73,11 @@ function editNote (noteId) {
     editNoteModal.classList.toggle('is-active');
 }
 function deleteNote(noteId) {
+    if (confirm('Do you want to delete this note?')) {
     firebase.database().ref(`users/${googleUserId}/${noteId}`).remove();
+    }
 }
+
 function saveEditedNote() {
     const title = document.querySelector('#editTitleInput').value;
     const text = document.querySelector('#editTextInput').value;
