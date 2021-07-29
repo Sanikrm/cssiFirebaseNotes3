@@ -19,7 +19,24 @@ const handleNoteSubmit = () => {
   // 2. Format the data and write it to our database
   firebase.database().ref(`users/${googleUser.uid}`).push({
     title: noteTitle.value,
-    text: noteText.value
+    text: noteText.value,
+    archive: false
+  })
+  // 3. Clear the form so that we can write a new note
+  .then(() => {
+    noteTitle.value = "";
+    noteText.value = "";
+  });
+}
+const handleNoteSubmitArchive = () => {
+  // 1. Capture the form data
+  const noteTitle = document.querySelector('#noteTitle');
+  const noteText = document.querySelector('#noteText');
+  // 2. Format the data and write it to our database
+  firebase.database().ref(`users/${googleUser.uid}`).push({
+    title: noteTitle.value,
+    text: noteText.value,
+    archive: true
   })
   // 3. Clear the form so that we can write a new note
   .then(() => {

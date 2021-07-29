@@ -24,7 +24,7 @@ const renderDataAsHtml = (data) => {
   for(const noteId in data) {
     const note = data[noteId];
     // For each note create an HTML card
-    if(!note.archive) {
+    if(note.archive) {
         cards += createCard(note, noteId)
     }
   };
@@ -42,9 +42,7 @@ const createCard = (note, noteId) => {
            <div class="content">${note.text}</div>
          </div>
          <footer class="card-footer">
-            <a href="#" class="card-footer-item" onclick= "deleteNote('${noteId}')"> Delete </a>
-            <a href="#" class="card-footer-item" onclick= "editNote('${noteId}')"> Edit </a>
-            <a href="#" class="card-footer-item" onclick= "archiveNote('${note.title}', '${note.text}', '${noteId}')"> Archive </a>
+            <a href="#" class="card-footer-item" onclick= "UnarchiveNote('${note.title}','${note.text}','${noteId}')"> Unarchive </a>
          </footer>
        </div>
      </div>
@@ -77,7 +75,7 @@ function closeEditModal() {
     editNoteModal.classList.toggle('is-active');
 }
 
-function archiveNote(title, text, noteId) {
-    const editedNote = {title, text, archive:true};
-    firebase.database().ref(`users/${googleUserId}/${noteId}`).update(editedNote);
+function UnarchiveNote(title, text, noteId) {
+    const editedNote = {title, text, archive:false};
+    firebase.database().ref(`users/${googleUserId}/${noteId}`).update(editedNote); 
 }
