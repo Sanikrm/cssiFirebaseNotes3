@@ -2,6 +2,7 @@ body {
     background-color: aliceblue;
 }
 
+
 input::placeholder {
   color: antiquewhite;
 }
@@ -26,7 +27,7 @@ input::placeholder {
 }
 
 .footer {
-  background: white;
+  background: aliceblue;
 }
 
 .footer a:hover {
